@@ -1,3 +1,6 @@
+DOCKER COMPOSE HA QUEDADO DESCATUALIZADO DEBIDO A VERIOS CAMBIOS REALIZADOS..SE RECOMIENDA
+docker-compose up -d --build
+
 Endpoints Pedidos:
 
 - Uno que traiga las empresas que hicieron transferencias el último mes
@@ -50,4 +53,10 @@ docker run -d \
   -e JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
   --name empresa-hexacontainer \
   empresa-hexacontainer
+
+
+SWAGGER
+  //en mi caso particular estoy entrando a:
+   http://localhost:8081/swagger-ui/index.html
+   http://localhost:8081/api-docs
 
