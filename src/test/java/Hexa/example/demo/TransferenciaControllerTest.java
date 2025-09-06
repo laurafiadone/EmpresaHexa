@@ -32,10 +32,6 @@ public class TransferenciaControllerTest {
 
         Mockito.when(transferenciaUC.getTransferencias()).thenReturn(List.of(transferencia));
 
-   /*     mockMvc.perform(get("/api/transferencias"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].empresa").value(1));
-    }*/
         List<TransferenciaDTO> result = controller.getTransferencias();
 
         assertEquals(1, result.size());
@@ -49,30 +45,12 @@ public class TransferenciaControllerTest {
 
         Mockito.when(transferenciaUC.insertTransferencia(Mockito.any(Transferencia.class))).thenReturn(transferencia);
 
-      /*  String jsonBody = """
-        {
-          "importe": 10,
-          "empresa": 12,
-          "cuentaDebito": "A"
-          "cuentaCredito": "C"
-        }
-        """;
-
-        mockMvc.perform(post("/api/transferencias")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonBody))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.empresa").value(12));*/
-
         TransferenciaDTO input = new TransferenciaDTO(12, 12L, "cuentadebito", "cuentacredito", fecha);
 
-        // llamamos al controlador
         ResponseEntity<TransferenciaDTO> response = controller.insertTransferencia(input);
 
-        // obtenemos el DTO del body
         TransferenciaDTO result = response.getBody();
 
-        // verificamos los campos
         assertEquals(12L, result.getEmpresa());
     }
 
@@ -82,10 +60,6 @@ public class TransferenciaControllerTest {
         Transferencia transferencia = new Transferencia(12, 1L, "cuentadebito", "cuentacredito", fecha);
 
         Mockito.when(transferenciaUC.getLastTransferencias()).thenReturn(List.of(transferencia));
-/*
-        mockMvc.perform(get("/api/transferencias/period/last-transferencias"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].empresa").value(1));*/
 
         List<TransferenciaDTO> result = controller.getLastTransferencias();
 

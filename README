@@ -1,16 +1,53 @@
-# Dockerfile
+Endpoints Pedidos:
 
-# Usamos OpenJDK 17
-FROM eclipse-temurin:17-jdk
+- Uno que traiga las empresas que hicieron transferencias el último mes
+- Otro que traiga las empresas que se adhirieron el último mes.
+- El último que haga la adhesión de una empresa.
 
-# Directorio de la app dentro del contenedor
-WORKDIR /app
+En el caso del primer punto, las transferencias no contaban con una fecha de transferencia por definición, según lo que se dio en la consigna. Y la fecha que se encontraba en la tabla Empresa era la fecha en la que se había creado la Empresa, Por ende, se decidió agregar un campo fecha de transferencia en la tabla Transferencia para poder devolver dichos datos.
+getEmpresasLastMonth() {....}
+Para el Segundo Punto este es el metodo final:
+getLastTransferencias() {...}
+Con respecto al ultimo punto, se pedi el Insert de Nuevas Empresas:
+insertEmpresa() {....}
 
-# Copiamos el jar construido
-COPY target/empresa-0.0.1-SNAPSHOT.jar app.jar
 
-# Exponemos el puerto de Spring Boot
-EXPOSE 8080
+Comentarios
 
-# Comando para ejecutar la app
-ENTRYPOINT ["java","-jar","app.jar"]
+Debido a algunos problemas con la DB se agregaron atributos como @Column o @JsonProperty, ya que se estaba usando una DB local ya creada.
+
+El HomeController solo está para saber que se puede acceder a la página de localhost.
+
+Con respecto a los Test, en los test de Controllers se hizo de esta forma:
+	private EmpresaUC empresaUC;
+	private EmpresaController empresaController;
+
+	@BeforeEach
+	void setUp() {
+		empresaUC = Mockito.mock(EmpresaUC.class);
+		empresaController = new EmpresaController(empresaUC);
+}
+
+Debido a varios problemas que se tenía con @SpringBootTest y @WebMvcTest, por lo que en vez de usar el Perform como se muestra más abajo, se usó llamando al método con el controlador, como por ejemplo:
+mockMvc.perform(get(“/api/transferencias”))
+.andExpect(status().isOk())
+.andExpect(jsonPath(“$[0].empresa”).value(1));
+
+
+
+-Codigo Formateado.
+
+
+-Docker Run Usado
+
+docker run -d \
+  -p 8081:8080 \
+  -p 5005:5005 \
+  -e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/sys \
+  -e SPRING_DATASOURCE_USERNAME=docker_user \
+  -e SPRING_DATASOURCE_PASSWORD=docker_pass \
+  -e SPRING_JPA_HIBERNATE_DDL_AUTO=update \
+  -e JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
+  --name empresa-hexacontainer \
+  empresa-hexacontainer
+
