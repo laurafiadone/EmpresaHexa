@@ -71,10 +71,10 @@ public class TransferenciaAdapterTest {
         when(transferenciaRepo.save(any(TransferenciaEntity.class))).thenReturn(entity);
         when(transferenciaEntityMapper.transferenciaToDomain(entity)).thenReturn(transferencia);
 
-       Transferencia transferenciaSave =  transferenciaAdapter.save(transferencia);
+        Transferencia transferenciaSave = transferenciaAdapter.save(transferencia);
 
-       assertEquals(10, transferenciaSave.getEmpresa());
-       verify(transferenciaRepo).save(any(TransferenciaEntity.class));
+        assertEquals(10, transferenciaSave.getEmpresa());
+        verify(transferenciaRepo).save(any(TransferenciaEntity.class));
     }
 
     @Test

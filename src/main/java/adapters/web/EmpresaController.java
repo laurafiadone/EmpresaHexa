@@ -5,6 +5,7 @@ import domain.CuitException;
 import domain.model.Empresa;
 import domain.ports.in.EmpresaUC;
 import dto.EmpresaDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
 
@@ -37,13 +37,13 @@ public class EmpresaController {
     @Operation(
             summary = "Listar todas las empresas",
             description = """
-                Devuelve una lista de empresas registradas
-        
-                ###CURL:
-                ```bash
-                curl -X GET "http://localhost:8080/empresas" -H "accept: application/json"
-                ```
-                """
+                    Devuelve una lista de empresas registradas
+                    
+                    ###CURL:
+                    ```bash
+                    curl -X GET "http://localhost:8080/empresas" -H "accept: application/json"
+                    ```
+                    """
     )
     @ApiResponses({
             @ApiResponse(
@@ -54,21 +54,21 @@ public class EmpresaController {
                             examples = @ExampleObject(
                                     name = "Ejemplo",
                                     value = """
-                                    [
-                                      {
-                                        "id": 1,
-                                        "cuit": 1234,
-                                        "razonSocial": "EmpresaA",
-                                        "fechaAdhesion": "2025-09-10"
-                                      },
-                                      {
-                                        "id": 2,
-                                        "cuit": 5678,
-                                        "razonSocial": "EmpresaB",
-                                        "fechaAdhesion": "2025-08-01"
-                                      }
-                                    ]
-                                    """
+                                            [
+                                              {
+                                                "id": 1,
+                                                "cuit": 1234,
+                                                "razonSocial": "EmpresaA",
+                                                "fechaAdhesion": "2025-09-10"
+                                              },
+                                              {
+                                                "id": 2,
+                                                "cuit": 5678,
+                                                "razonSocial": "EmpresaB",
+                                                "fechaAdhesion": "2025-08-01"
+                                              }
+                                            ]
+                                            """
                             )
                     )
             )
@@ -91,12 +91,12 @@ public class EmpresaController {
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
                                     name = "Empresa Nueva",
                                     value = """
-                                    {
-                                      "cuit": 1234,
-                                      "razonSocial": "EmpresaA",
-                                      "fechaAdhesion": "2025-09-10"
-                                    }
-                                    """
+                                            {
+                                              "cuit": 1234,
+                                              "razonSocial": "EmpresaA",
+                                              "fechaAdhesion": "2025-09-10"
+                                            }
+                                            """
                             )
                     )
             )
@@ -110,8 +110,7 @@ public class EmpresaController {
             Empresa empresa_save = empresaMapper.empresaToDomain(in_empresa);
             Empresa empresa_creada = empresaUC.insertEmpresa(empresa_save);
             return ResponseEntity.ok(empresaMapper.empresaToDTO(empresa_creada));
-        }
-        catch (CuitException e) {
+        } catch (CuitException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
     }
@@ -120,13 +119,13 @@ public class EmpresaController {
     @Operation(
             summary = "Listar empresas ultimo mes",
             description = """
-                Devuelve una lista de empresas que se adherieron el ultimo mes
-        
-                ### CURL:
-                ```bash
-                curl -X GET "http://localhost:8080/empresas/last-month" -H "accept: application/json"
-                ```
-                """
+                    Devuelve una lista de empresas que se adherieron el ultimo mes
+                    
+                    ### CURL:
+                    ```bash
+                    curl -X GET "http://localhost:8080/empresas/last-month" -H "accept: application/json"
+                    ```
+                    """
     )
     @ApiResponses({
             @ApiResponse(
@@ -137,21 +136,21 @@ public class EmpresaController {
                             examples = @ExampleObject(
                                     name = "Ejemplo",
                                     value = """
-                                    [
-                                      {
-                                        "id": 1,
-                                        "cuit": 1234,
-                                        "razonSocial": "EmpresaA",
-                                        "fechaAdhesion": "2025-09-10"
-                                      },
-                                      {
-                                        "id": 2,
-                                        "cuit": 5678,
-                                        "razonSocial": "EmpresaB",
-                                        "fechaAdhesion": "2025-08-01"
-                                      }
-                                    ]
-                                    """
+                                            [
+                                              {
+                                                "id": 1,
+                                                "cuit": 1234,
+                                                "razonSocial": "EmpresaA",
+                                                "fechaAdhesion": "2025-09-10"
+                                              },
+                                              {
+                                                "id": 2,
+                                                "cuit": 5678,
+                                                "razonSocial": "EmpresaB",
+                                                "fechaAdhesion": "2025-08-01"
+                                              }
+                                            ]
+                                            """
                             )
                     )
             )
@@ -164,13 +163,13 @@ public class EmpresaController {
     @Operation(
             summary = "Listar empresas por cuit",
             description = """
-                Devuelve empresas segun un cuit
-        
-                ###CURL:
-                ```bash
-                curl -X GET "http://localhost:8080/empresas/by-id/10" -H "accept: application/json"
-                ```
-                """
+                    Devuelve empresas segun un cuit
+                    
+                    ###CURL:
+                    ```bash
+                    curl -X GET "http://localhost:8080/empresas/by-id/10" -H "accept: application/json"
+                    ```
+                    """
     )
     @ApiResponses({
             @ApiResponse(
@@ -181,15 +180,15 @@ public class EmpresaController {
                             examples = @ExampleObject(
                                     name = "Ejemplo",
                                     value = """
-                                    [
-                                      {
-                                        "id": 1,
-                                        "cuit": 1234,
-                                        "razonSocial": "EmpresaA",
-                                        "fechaAdhesion": "2025-09-10"
-                                      }
-                                    ]
-                                    """
+                                            [
+                                              {
+                                                "id": 1,
+                                                "cuit": 1234,
+                                                "razonSocial": "EmpresaA",
+                                                "fechaAdhesion": "2025-09-10"
+                                              }
+                                            ]
+                                            """
                             )
                     )
             )

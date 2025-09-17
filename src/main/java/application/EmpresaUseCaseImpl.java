@@ -4,11 +4,8 @@ import domain.CuitException;
 import domain.model.Empresa;
 import domain.ports.in.EmpresaUC;
 import domain.ports.out.EmpresaRepoPort;
-import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
 

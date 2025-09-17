@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface SpringDataEmpresaRepo extends JpaRepository<EmpresaEntity, Long> {
     List<EmpresaEntity> findByFechaAdhesionBetween(LocalDate dateFrom, LocalDate dateTo);
-
 }

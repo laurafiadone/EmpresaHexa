@@ -51,3 +51,7 @@ SWAGGER
     http://localhost:8081/swagger-ui/index.html
     http://localhost:8081/api-docs
 
+    Con respecto a @Operation y @ApiResponse se hizo de esa forma ya que no se sabia cual era la requerida,
+    pero se podria usar Schemas en los dtos y simplificar asi los ejemplos en el controller, dejando solamente
+    los apiresponse con los codigos, para que quede mas legible.
+
