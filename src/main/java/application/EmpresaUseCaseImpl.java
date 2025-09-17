@@ -1,19 +1,23 @@
-package domain.service;
+package application;
 
+import domain.CuitException;
 import domain.model.Empresa;
 import domain.ports.in.EmpresaUC;
 import domain.ports.out.EmpresaRepoPort;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmpresaService implements EmpresaUC {
+public class EmpresaUseCaseImpl implements EmpresaUC {
 
     private EmpresaRepoPort empresaRepoPort;
 
-    public EmpresaService(EmpresaRepoPort empresaRepoPort) {
+    public EmpresaUseCaseImpl(EmpresaRepoPort empresaRepoPort) {
         this.empresaRepoPort = empresaRepoPort;
     }
 
@@ -29,6 +33,10 @@ public class EmpresaService implements EmpresaUC {
 
     @Override
     public Empresa insertEmpresa(Empresa empresa) {
+        Optional<Empresa> empresaPresent = empresaRepoPort.findByCuit(empresa.getCuit());
+        if (empresaPresent.isPresent()) {
+            throw new CuitException("Cuit already exists" + empresa.getCuit());
+        }
         return empresaRepoPort.save(empresa);
     }
 

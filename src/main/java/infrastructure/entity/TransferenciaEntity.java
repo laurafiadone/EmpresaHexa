@@ -1,4 +1,4 @@
-package infrastructure;
+package infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,11 +22,4 @@ public class TransferenciaEntity {
     private String cuentaCredito;
     @Column(name = "fecha")
     private LocalDate fecha;
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.fecha == null) {
-            this.fecha = LocalDate.now();
-        }
-    }
 }

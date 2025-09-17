@@ -12,7 +12,6 @@ public class Empresa {
 
     private Long cuit;
     private String razon_social;
-    @Column(name = "fecha_adhesion")
     private LocalDate fechaAdhesion;
 
     public Empresa(Empresa empresa) {

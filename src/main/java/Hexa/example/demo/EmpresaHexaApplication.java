@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"Hexa.example.demo", "application.adaptador", "application.controller", "domain.service", "dto", "infrastructure"})
+@ComponentScan(basePackages = {"Hexa.example.demo", "application", "adapters.web", "adapters.persistence", "dto", "infrastructure", "adapters.persistence.mapper", "adapters.web.mapper", "config"})
 @EnableJpaRepositories(basePackages = "infrastructure")
 @EntityScan(basePackages = "infrastructure")
 public class EmpresaHexaApplication {

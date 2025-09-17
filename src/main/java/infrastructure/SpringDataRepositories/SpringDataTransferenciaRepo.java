@@ -1,5 +1,6 @@
-package infrastructure;
+package infrastructure.SpringDataRepositories;
 
+import infrastructure.entity.TransferenciaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

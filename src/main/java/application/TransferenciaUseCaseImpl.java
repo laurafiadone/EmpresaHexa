@@ -1,4 +1,4 @@
-package domain.service;
+package application;
 
 import domain.model.Transferencia;
 import domain.ports.in.TransferenciaUC;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TransferenciaService implements TransferenciaUC {
+public class TransferenciaUseCaseImpl implements TransferenciaUC {
 
     private TransferenciaRepoPort transferenciaRepoPort;
 
-    public TransferenciaService(TransferenciaRepoPort transferenciaRepoPort) {
+    public TransferenciaUseCaseImpl(TransferenciaRepoPort transferenciaRepoPort) {
         this.transferenciaRepoPort = transferenciaRepoPort;
     }
 

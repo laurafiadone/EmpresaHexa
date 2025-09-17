@@ -1,6 +1,7 @@
-package Hexa.example.demo;
+package Hexa.example.demo.TransferenciaTests;
 
-import application.controller.TransferenciaController;
+import adapters.web.TransferenciaController;
+import adapters.web.mappers.TransferenciaMapper;
 import domain.model.Transferencia;
 import domain.ports.in.TransferenciaUC;
 import dto.TransferenciaDTO;
@@ -18,19 +19,24 @@ public class TransferenciaControllerTest {
 
     private TransferenciaUC transferenciaUC;
     private TransferenciaController controller;
+    private TransferenciaMapper mapper;
+
 
     @BeforeEach
     void setup() {
         transferenciaUC = Mockito.mock(TransferenciaUC.class);
-        controller = new TransferenciaController(transferenciaUC);
+        mapper = Mockito.mock(TransferenciaMapper.class);
+        controller = new TransferenciaController(transferenciaUC, mapper);
     }
 
     @Test
     void getTransferencias_Pass() throws Exception {
         LocalDate fecha = LocalDate.of(2025, 5, 10);
         Transferencia transferencia = new Transferencia(12, 1L, "cuentadebito", "cuentacredito", fecha);
+        TransferenciaDTO dto = new TransferenciaDTO(12, 1L, "cuentadebito", "cuentacredito", fecha);
 
         Mockito.when(transferenciaUC.getTransferencias()).thenReturn(List.of(transferencia));
+        Mockito.when(mapper.transferenciaToDTO(Mockito.any(Transferencia.class))).thenReturn(dto);
 
         List<TransferenciaDTO> result = controller.getTransferencias();
 
@@ -42,10 +48,11 @@ public class TransferenciaControllerTest {
     void insertTransferencia_Pass() throws Exception {
         LocalDate fecha = LocalDate.of(2025, 5, 10);
         Transferencia transferencia = new Transferencia(12, 12L, "cuentadebito", "cuentacredito", fecha);
+        TransferenciaDTO input = new TransferenciaDTO(12, 12L, "cuentadebito", "cuentacredito", fecha);
 
         Mockito.when(transferenciaUC.insertTransferencia(Mockito.any(Transferencia.class))).thenReturn(transferencia);
-
-        TransferenciaDTO input = new TransferenciaDTO(12, 12L, "cuentadebito", "cuentacredito", fecha);
+        Mockito.when(mapper.transferenciaToDomain(Mockito.any(TransferenciaDTO.class))).thenReturn(transferencia);
+        Mockito.when(mapper.transferenciaToDTO(Mockito.any(Transferencia.class))).thenReturn(input);
 
         ResponseEntity<TransferenciaDTO> response = controller.insertTransferencia(input);
 
@@ -58,8 +65,10 @@ public class TransferenciaControllerTest {
     void getLastTransferencias_Pass() throws Exception {
         LocalDate fecha = LocalDate.of(2025, 5, 10);
         Transferencia transferencia = new Transferencia(12, 1L, "cuentadebito", "cuentacredito", fecha);
+        TransferenciaDTO dto = new TransferenciaDTO(12, 1L, "cuentadebito", "cuentacredito", fecha);
 
         Mockito.when(transferenciaUC.getLastTransferencias()).thenReturn(List.of(transferencia));
+        Mockito.when(mapper.transferenciaToDTO(Mockito.any(Transferencia.class))).thenReturn(dto);
 
         List<TransferenciaDTO> result = controller.getLastTransferencias();
 

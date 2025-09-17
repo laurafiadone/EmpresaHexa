@@ -1,6 +1,3 @@
-DOCKER COMPOSE HA QUEDADO DESCATUALIZADO DEBIDO A VERIOS CAMBIOS REALIZADOS..SE RECOMIENDA
-docker-compose up -d --build
-
 Endpoints Pedidos:
 
 - Uno que traiga las empresas que hicieron transferencias el último mes
@@ -17,46 +14,40 @@ insertEmpresa() {....}
 
 Comentarios
 
-Debido a algunos problemas con la DB se agregaron atributos como @Column o @JsonProperty, ya que se estaba usando una DB local ya creada.
+Se agrego Clock para fechas para mayor testeabilidad.
 
-El HomeController solo está para saber que se puede acceder a la página de localhost.
+//////////////////////////////////
+GUIA
 
-Con respecto a los Test, en los test de Controllers se hizo de esta forma:
-	private EmpresaUC empresaUC;
-	private EmpresaController empresaController;
+mvn clean package
 
-	@BeforeEach
-	void setUp() {
-		empresaUC = Mockito.mock(EmpresaUC.class);
-		empresaController = new EmpresaController(empresaUC);
-}
-
-Debido a varios problemas que se tenía con @SpringBootTest y @WebMvcTest, por lo que en vez de usar el Perform como se muestra más abajo, se usó llamando al método con el controlador, como por ejemplo:
-mockMvc.perform(get(“/api/transferencias”))
-.andExpect(status().isOk())
-.andExpect(jsonPath(“$[0].empresa”).value(1));
-
-
-
--Codigo Formateado.
-
-
--Docker Run Usado
+docker build -t empresa-hexacontainer .
 
 docker run -d \
   -p 8081:8080 \
-  -p 5005:5005 \
   -e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/sys \
   -e SPRING_DATASOURCE_USERNAME=docker_user \
   -e SPRING_DATASOURCE_PASSWORD=docker_pass \
   -e SPRING_JPA_HIBERNATE_DDL_AUTO=update \
-  -e JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
   --name empresa-hexacontainer \
   empresa-hexacontainer
 
+En caso de conflicto con puertos -> docker rm -f empresa-hexacontainer
+
+Para ver el log -> docker logs -f empresa-hexacontainer
+
+ 409 Conflict chequea cuit duplicado
+
+UNIT TEST
+se agregaron los test pedidos, que evaluan los borders.
+
+    para correrlos
+        mvn test
+
+       Para correr por Modulo se puede hacer -> mvn -Dtest='Empresa*' test
 
 SWAGGER
-  //en mi caso particular estoy entrando a:
-   http://localhost:8081/swagger-ui/index.html
-   http://localhost:8081/api-docs
+    Para ver documentacion:
+    http://localhost:8081/swagger-ui/index.html
+    http://localhost:8081/api-docs
 

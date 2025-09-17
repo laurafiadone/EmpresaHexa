@@ -1,4 +1,4 @@
-package infrastructure;
+package infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @Table(name = "empresa")
 public class EmpresaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cuit")
     private Long cuit;// set as auto increment in DB
-    private String razon_social;
+    @Column(name = "razon_social")
+    private String razonSocial;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_adhesion")
     private LocalDate fechaAdhesion;
